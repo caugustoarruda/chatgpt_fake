@@ -4,7 +4,11 @@ Interface de chat simples para conversar com o **GPT-4o**, composta por uma API 
 
 ## Motivo do projeto
 
-Ter um chat próprio com o GPT-4o, com a chave da OpenAI guardada no servidor (nunca exposta no navegador) e uma interface enxuta, sem framework de frontend nem etapa de build. O projeto também serve como base de estudo para integrar um LLM a uma API e a uma interface web.
+Este é um **projeto de estudos** sobre implementação via **vibe coding**: construir uma aplicação de ponta a ponta descrevendo o que se quer em linguagem natural e iterando com um assistente de IA (Claude Code), em vez de escrever cada linha à mão.
+
+O objetivo prático é ter um chat próprio com o GPT-4o, com a chave da OpenAI guardada no servidor (nunca exposta no navegador) e uma interface enxuta, sem framework de frontend nem etapa de build. Ao longo do caminho, o projeto serve para praticar a integração de um LLM com uma API e uma interface web.
+
+> Por ser um projeto de estudos, o código não foi pensado para produção. Veja as [limitações atuais](#limitações-atuais).
 
 ## Funcionalidades
 
