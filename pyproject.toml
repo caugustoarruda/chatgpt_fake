@@ -1,0 +1,20 @@
+[project]
+name = "my-chatgpt"
+version = "0.1.0"
+description = "Chamada simples ao GPT-4o usando a Responses API da OpenAI"
+readme = "README.md"
+authors = [
+    { name = "Carlos Arruda", email = "caugustogarruda@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "openai>=3.16.2",
+    "python-dotenv>=1.2.3",
+]
+
+[project.scripts]
+my-chatgpt = "my_chatgpt:main"
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"
