@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Lumina Chat</title>
+<title>Free ChatGPT</title>
 
 <!-- fonts (Inter + Instrument Serif, as no design system) -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -11,9 +11,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
 
 <!-- design system: botão com partículas, feixes (beam-fall) e fadeSlideIn -->
-<link rel="stylesheet" href="assets/css/components.css"/>
-<link rel="stylesheet" href="assets/css/animations.css"/>
-<script src="assets/lucide_latest_2eebd0ebe8c2.js"></script>
+<link rel="stylesheet" href="lumina-video/assets/css/components.css"/>
+<link rel="stylesheet" href="lumina-video/assets/css/animations.css"/>
+<script src="lumina-video/assets/lucide_latest_2eebd0ebe8c2.js"></script>
 
 <style>
   :root {
@@ -52,6 +52,15 @@
   button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; padding: 0; }
   textarea { font: inherit; color: inherit; }
   :focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+  /* ---------- Aura (UnicornStudio, WebGL) ---------- */
+  .aura {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; pointer-events: none;
+    filter: hue-rotate(90deg) saturate(.5); mix-blend-mode: screen;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 0%, #000 80%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, #000 0%, #000 80%, transparent);
+  }
+  .aura > div { position: absolute; inset: 0; }
 
   /* ---------- Fundo (imagem + gradientes + grade com feixes) ---------- */
   .bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
@@ -272,14 +281,24 @@
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    /* feixes decorativos do fundo: mantêm a animação (lenta e sutil), senão ficam parados como linhas fixas no topo */
+    .grid-lines .beam { animation-iteration-count: infinite !important; }
+    .grid-lines .animate-beam-1 { animation-duration: 6s !important; }
+    .grid-lines .animate-beam-2 { animation-duration: 8s !important; }
+    .grid-lines .animate-beam-3 { animation-duration: 7s !important; }
   }
 </style>
 </head>
 <body>
 
+<!-- aura: fundo animado (UnicornStudio) -->
+<div class="aura" aria-hidden="true">
+  <div data-us-project="ILgOO23w4wEyPQOKyLO4"></div>
+</div>
+
 <!-- fundo: imagem + gradientes -->
 <div class="bg" aria-hidden="true">
-  <img alt="" src="assets/2b5079f4-4ddd-433b-a936-fc8f7d_7da21e998877.webp"/>
+  <img alt="" src="lumina-video/assets/2b5079f4-4ddd-433b-a936-fc8f7d_7da21e998877.webp"/>
   <div class="fade"></div>
   <div class="glow"></div>
 </div>
@@ -300,7 +319,7 @@
   <aside class="sidebar" id="sidebar" aria-label="Conversas">
     <div class="brand">
       <div class="orb gborder" aria-hidden="true"></div>
-      <span>Lumina</span>
+      <span>Free ChatGPT</span>
     </div>
 
     <button class="button-custom" id="newChat" type="button">
@@ -346,7 +365,7 @@
 
   // ---------- Config ----------
   // Sobrescreva com ?api=http://host:porta se o backend estiver em outro endereço.
-  const API_URL = (new URLSearchParams(location.search).get('api') || 'http://localhost:8000').replace(/\/+$/, '');
+  const API_URL = (new URLSearchParams(location.search).get('api') || 'http://localhost:8001').replace(/\/+$/, '');
   const REQUEST_TIMEOUT_MS = 60000;
   const STORE_KEY = 'lumina.chats.v1';
   const SUGGESTIONS = [
@@ -483,7 +502,7 @@
   function renderWelcome() {
     els.messages.innerHTML = `<div class="welcome">
       <span class="eyebrow"><i></i>Assistente GPT-4o</span>
-      <h1>Converse com<em>a Lumina.</em></h1>
+      <h1>Converse com o<em>Free ChatGPT.</em></h1>
       <p>Tire dúvidas, escreva código, gere ideias. Faça uma pergunta ou comece por uma das sugestões abaixo.</p>
       <div class="suggestions">${SUGGESTIONS.map((s, i) =>
         `<button type="button" class="suggestion glass gborder" data-suggest="${esc(s)}"><span class="badge">${String(i + 1).padStart(2, '0')}</span><span>${esc(s)}</span><i data-lucide="arrow-right"></i></button>`).join('')}
@@ -494,7 +513,7 @@
   function renderMessages() {
     const chat = active();
     els.title.textContent = chat ? chat.title : 'Nova conversa';
-    document.title = (chat ? chat.title + ' · ' : '') + 'Lumina Chat';
+    document.title = (chat ? chat.title + ' · ' : '') + 'Free ChatGPT';
     if (!chat || !chat.messages.length) { renderWelcome(); return; }
     const thread = document.createElement('div');
     thread.className = 'thread';
@@ -669,5 +688,8 @@
   els.input.focus();
 })();
 </script>
+
+<!-- runtime do UnicornStudio (carrega o fundo aura via CDN) -->
+<script src="lumina-video/assets/js/unicorn-studio.js"></script>
 </body>
 </html>
